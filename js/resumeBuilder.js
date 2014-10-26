@@ -66,9 +66,9 @@ var education = {
 var projects = {
 	"projects": [
 	  {
-	   "title" : "adwadwa",
-	   "dates" : "asdasdsad",
-	   "description" : "asdadadaw"
+	   "title" : "happy",
+	   "dates" : "sad",
+	   "description" : "motivation"
 	   },
 	   {
 	   "title" : "adwadwa",
@@ -109,7 +109,8 @@ if(bio.skills.length > 0){
 	$("#skills").append(formattedSkill);
 	}
 
-for (job in work.jobs){
+function displayWork(){
+	for (job in work.jobs){
 	$("#workExperience").append(HTMLworkStart);
 
 	var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
@@ -126,9 +127,63 @@ for (job in work.jobs){
 	var formattedWorkDescription = HTMLworkDescription.replace("%data%",work.jobs[job].description);
 	$(".work-entry:last").append(formattedWorkDescription);
 	}
+}
+displayWork();
+function locationizer(work_obj){
+	var locationArray = [];
+	
+	for (job in work_obj.jobs){
+		var newLocation = work_obj.jobs[job].location;
+		locationArray.push(newLocation);
+		}
+		
+		return locationArray;
+	}
+	
+projects.display = function(){
+	for (project in projects.projects){
+		$("#projects").append(HTMLprojectStart);
+		
+		var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title);
+		$(".project-entry:last").append(formattedTitle);
+		
+		var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates);
+		$(".project-entry:last").append(formattedDates);
+		
+		var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
+		$(".project-entry:last").append(formattedDescription);
+		
+		if (projects.projects[project].images.length > 0) {
+			for (image in projects.projects[project].images) {
+				var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[image]);
+		$(".project-entry:last").append(formattedImage);
+			}
+		}
+	}
+}
+
+	
+	
+$(document).click(function(loc){
+	var x = loc.pageX;
+	var y = loc.pageY;
+	
+	logClicks(x,y);
+});
 $("#education").append(HTMLschoolStart);
 $("#education").append(formattedEduName);
 $("#education").append(formattedEduDegree);
 $("#education").append(formattedEduDates);
 $("#education").append(formattedEduLoc);
 $("#education").append(formattedEduMajor);
+
+function inName(name){
+	name = name.trim().split(" ");
+	console.log(name);
+	name[1] = name[1].toUpperCase();
+	name[0] = name[0].slice(0,1).toUpperCase() +
+		name[0].slice(1).toLowerCase();
+		
+	return name[0] +" "+name[1];
+	}
+$('#main').append(internationlizeButton);
